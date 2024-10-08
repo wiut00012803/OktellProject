@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Импортировать данные из Excel</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+</head>
+<body>
+    <h1>Импортировать данные из Excel</h1>
+    <form action="/import" method="post" enctype="multipart/form-data">
+        <label for="file">Выберите Excel файл:</label>
+        <input type="file" id="file" name="file" accept=".xlsx"><br><br>
+        <button type="submit">Загрузить и импортировать</button>
+    </form>
+</body>
+</html>

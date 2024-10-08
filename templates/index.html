@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мэнэджмент записей</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <script>
+        function loadNotes() {
+            const phone_number = document.getElementById("phone_number").value;
+            window.location.href = `/notes/${phone_number}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Добро пожаловать</h1>
+        <button class="logout-button" onclick="window.location.href='/logout'">Выйти</button>
+    </div>
+    <form onsubmit="event.preventDefault(); loadNotes();">
+        <label for="phone_number">ID номер</label>
+        <input type="text" id="phone_number" name="phone_number" required><br><br>
+        <button type="submit">Загузить записи</button>
+    </form>
+
+    {% if current_user.role == 'admin' %}
+    <h2>Опции администратора</h2>
+    <div class="admin-options">
+        <a class="button-link" href="{{ url_for('import_form') }}">Импортировать данные</a>
+        <a class="button-link" href="{{ url_for('export_form') }}">Экспортировать данные</a>
+        <a class="button-link" href="{{ url_for('clear_form') }}">Очистить базу данных</a>
+    </div>
+    {% endif %}
+</body>
+</html>

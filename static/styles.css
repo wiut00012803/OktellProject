@@ -1,0 +1,239 @@
+/* General Styles */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+h1, h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+a {
+    color: #8b0037;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"], input[type="date"] {
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    background-color: #ecf0f1;
+    border: 2px solid #8b0037;
+}
+
+input[type="text"]:focus, input[type="date"]:focus {
+    border-color: #6c002b;
+    background-color: #fff;
+}
+
+/* Specific Styles for date_of and results inputs */
+input[name="phone_new"], input[name="note"] {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 2px solid #8b0037;
+    color: #333;
+    background-color: #ecf0f1;
+}
+
+select[name="result1"], select[name="result2"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #8b0037;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    background-color: #ecf0f1;
+}
+
+select[name="result1"]:focus, select[name="result2"]:focus {
+    border-color: #6c002b;
+}
+
+button, .button-link {
+    background-color: #8b0037;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    display: inline-block;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+button:hover, .button-link:hover {
+    background-color: #6c002b;
+}
+
+.logout-button {
+    background-color: #333;
+    margin-left: 20px;
+}
+
+.logout-button:hover {
+    background-color: #555;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-options {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.admin-options .button-link {
+    margin-bottom: 10px;
+}
+
+/* List Styles */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    font-size: 14px;
+}
+
+/* Table Styles */
+table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #8b0037;
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    background-color: #f9f9f9;
+    font-size: 14px;
+}
+
+tr:hover td {
+    background-color: #f1f1f1;
+}
+
+.hidden-column {
+    display: none;
+}
+
+.collapsible {
+    cursor: pointer;
+    background-color: #8b0037;
+    color: white;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.collapsible:after {
+    font-weight: bold;
+    float: right;
+}
+
+.collapsible-content {
+    display: none;
+}
+
+.latest-record {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.latest-record table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.latest-record th, .latest-record td {
+    border: 1px solid #ddd;
+    color: black;
+    padding: 8px;
+}
+
+.latest-record th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-row label {
+    width: 150px;
+    margin-right: 10px;
+}
+
+.form-row select, .form-row input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+#phone_new_div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
