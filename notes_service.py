@@ -1,17 +1,18 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for, send_file, flash
-from werkzeug.utils import secure_filename
-import pandas as pd
-from models import db, CallInfo, User
-from datetime import datetime, timezone
-import pytz
-import logging
-import os
-from flask_migrate import Migrate
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from functools import wraps
 import io
 import json
+import logging
+import os
+from datetime import datetime, timezone
+from functools import wraps
+import pandas as pd
+import pytz
+from flask import Flask, request, jsonify, render_template, redirect, url_for, send_file, flash
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_migrate import Migrate
 from sqlalchemy import or_
+from werkzeug.utils import secure_filename
+
+from models import db, CallInfo, User
 
 app = Flask(__name__, instance_relative_config=True)
 app.config['UPLOAD_FOLDER'] = os.path.join(app.instance_path, 'uploads')

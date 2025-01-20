@@ -4,273 +4,312 @@
     <title>Коментарии для {{ client_id }}</title>
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
     <script>
-    let pageLoadTime = Date.now();  // Record the time when the page is loaded
-    let noteAdded = false;
+        let pageLoadTime = Date.now();  // Record the time when the page is loaded
+        let noteAdded = false;
 
-    // Check if the page is being loaded after a refresh
-    window.addEventListener('beforeunload', function(event) {
-        sessionStorage.setItem('lastUnload', Date.now());
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const result1 = document.getElementById('result1');
-        const result2 = document.getElementById('result2');
-        const phoneNewDiv = document.getElementById('phone_new_div');
-        const dateOfInput = document.getElementById('date_of');
-        const phoneNewInput = document.getElementById('phone_new');
-        const phoneNewError = document.createElement('div');
-
-        phoneNewError.style.color = 'red';
-        phoneNewError.style.display = 'none';
-        phoneNewError.textContent = 'В номере телефона должно быть 9 цифр.';
-        phoneNewDiv.appendChild(phoneNewError);
-
-        const updatePhoneNewVisibility = () => {
-            const value = result1.value;
-            if (value === 'Сам клиент') {
-                result2.innerHTML = `
-                    <option value="Отказался от оплаты">Отказался от оплаты</option>
-                    <option value="Оплатит в">Оплатит в</option>
-                    <option value="Оплатил">Оплатил</option>
-                    <option value="Оплата через МИБ">Оплата через МИБ</option>
-                    <option value="Частично оплатил">Частично оплатил</option>
-                `;
-                phoneNewDiv.style.display = 'none';
-            } else if (value === '3 лицо') {
-                result2.innerHTML = `
-                    <option value="Не знает клиента">Не знает клиента</option>
-                    <option value="Родственник">Родственник</option>
-                    <option value="Дал новый номер телефона">Дал новый номер телефона</option>
-                `;
-                phoneNewDiv.style.display = 'flex';
-            } else if (value === 'Доп. номер') {
-                result2.innerHTML = `
-                    <option value="Клиент умер">Клиент умер</option>
-                    <option value="Клиент в тюрьме">Клиент в тюрьме</option>
-                    <option value="Клиент заграницей">Клиент заграницей</option>
-                    <option value="Обещал связаться с клиентом">Обещал связаться с клиентом</option>
-                    <option value="Передал клиенту">Передал клиенту</option>
-                    <option value="Не знаком с клиентом">Не знаком с клиентом</option>
-                    <option value="Отказался от разговора">Отказался от разговора</option>
-                `;
-                phoneNewDiv.style.display = 'flex';
-            } else if (value === 'Повесил трубку') {
-                result2.innerHTML = '<option value="Ничего">Ничего</option>';
-                phoneNewDiv.style.display = 'none';
-            } else {
-                result2.innerHTML = '<option value="">Выберите опцию</option>';
-                phoneNewDiv.style.display = 'none';
-            }
-        };
-
-        result1.addEventListener('change', updatePhoneNewVisibility);
-        updatePhoneNewVisibility();
-
-        phoneNewInput.addEventListener('input', function() {
-            this.value = this.value.replace(/\D/g, '').slice(0, 9);
-            phoneNewError.style.display = this.value.length === 9 || this.value.length === 0 ? 'none' : 'block';
+        // Check if the page is being loaded after a refresh
+        window.addEventListener('beforeunload', function(event) {
+            sessionStorage.setItem('lastUnload', Date.now());
         });
 
-        const setMinMaxDate = () => {
-            const today = new Date();
-            const maxDate = new Date();
-            maxDate.setDate(today.getDate() + 3);
-            const todayString = today.toISOString().split('T')[0];
-            const maxDateString = maxDate.toISOString().split('T')[0];
-            dateOfInput.setAttribute('min', todayString);
-            dateOfInput.setAttribute('max', maxDateString);
-        };
+        document.addEventListener('DOMContentLoaded', () => {
+            const result1 = document.getElementById('result1');
+            const result2 = document.getElementById('result2');
+            const phoneNewDiv = document.getElementById('phone_new_div');
+            const dateOfInput = document.getElementById('date_of');
+            const phoneNewInput = document.getElementById('phone_new');
+            const phoneNewError = document.createElement('div');
 
-        setMinMaxDate();
+            phoneNewError.style.color = 'red';
+            phoneNewError.style.display = 'none';
+            phoneNewError.textContent = 'В номере телефона должно быть 9 цифр.';
+            phoneNewDiv.appendChild(phoneNewError);
 
-        const toggleSummDetails = document.getElementById('toggleSummDetails');
-        const collapsibleContent = document.querySelectorAll('.collapsible-content');
+            const updatePhoneNewVisibility = () => {
+                const value = result1.value;
+                if (value === 'Сам клиент') {
+                    result2.innerHTML = `
+                        <option value="Отказался от оплаты">Отказался от оплаты</option>
+                        <option value="Оплатит в">Оплатит в</option>
+                        <option value="Оплатил">Оплатил</option>
+                        <option value="Оплата через МИБ">Оплата через МИБ</option>
+                        <option value="Частично оплатил">Частично оплатил</option>
+                    `;
+                    phoneNewDiv.style.display = 'none';
+                } else if (value === '3 лицо') {
+                    result2.innerHTML = `
+                        <option value="Не знает клиента">Не знает клиента</option>
+                        <option value="Родственник">Родственник</option>
+                        <option value="Дал новый номер телефона">Дал новый номер телефона</option>
+                    `;
+                    phoneNewDiv.style.display = 'flex';
+                } else if (value === 'Доп. номер') {
+                    result2.innerHTML = `
+                        <option value="Клиент умер">Клиент умер</option>
+                        <option value="Клиент в тюрьме">Клиент в тюрьме</option>
+                        <option value="Клиент заграницей">Клиент заграницей</option>
+                        <option value="Обещал связаться с клиентом">Обещал связаться с клиентом</option>
+                        <option value="Передал клиенту">Передал клиенту</option>
+                        <option value="Не знаком с клиентом">Не знаком с клиентом</option>
+                        <option value="Отказался от разговора">Отказался от разговора</option>
+                    `;
+                    phoneNewDiv.style.display = 'flex';
+                } else if (value === 'Повесил трубку') {
+                    result2.innerHTML = '<option value="Ничего">Ничего</option>';
+                    phoneNewDiv.style.display = 'none';
+                } else {
+                    result2.innerHTML = '<option value="">Выберите опцию</option>';
+                    phoneNewDiv.style.display = 'none';
+                }
+            };
 
-        const isContentVisible = [...collapsibleContent].some(element => element.style.display !== 'none');
-        toggleSummDetails.textContent = isContentVisible ? 'Скрыть детали' : 'Детали';
+            result1.addEventListener('change', updatePhoneNewVisibility);
+            updatePhoneNewVisibility();
 
-        toggleSummDetails.addEventListener('click', function () {
-            collapsibleContent.forEach(element => {
-                element.style.display = element.style.display === 'none' ? 'table-cell' : 'none';
+            phoneNewInput.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 9);
+                phoneNewError.style.display = this.value.length === 9 || this.value.length === 0 ? 'none' : 'block';
             });
-            const isContentNowVisible = [...collapsibleContent].some(element => element.style.display !== 'none');
-            this.textContent = isContentNowVisible ? 'Скрыть детали' : 'Детали';
+
+            const setMinMaxDate = () => {
+                const today = new Date();
+                const maxDate = new Date();
+                maxDate.setDate(today.getDate() + 3);
+                const todayString = today.toISOString().split('T')[0];
+                const maxDateString = maxDate.toISOString().split('T')[0];
+                dateOfInput.setAttribute('min', todayString);
+                dateOfInput.setAttribute('max', maxDateString);
+            };
+
+            setMinMaxDate();
+
+            const toggleSummDetails = document.getElementById('toggleSummDetails');
+            const collapsibleContent = document.querySelectorAll('.collapsible-content');
+
+            const isContentVisible = [...collapsibleContent].some(element => element.style.display !== 'none');
+            toggleSummDetails.textContent = isContentVisible ? 'Скрыть детали' : 'Детали';
+
+            toggleSummDetails.addEventListener('click', function () {
+                collapsibleContent.forEach(element => {
+                    element.style.display = element.style.display === 'none' ? 'table-cell' : 'none';
+                });
+                const isContentNowVisible = [...collapsibleContent].some(element => element.style.display !== 'none');
+                this.textContent = isContentNowVisible ? 'Скрыть детали' : 'Детали';
+            });
+
+            // Automatically add note if less than 15 seconds
+            window.addEventListener('unload', function(event) {
+                const timeSpent = (Date.now() - pageLoadTime) / 1000;  // Time in seconds
+                const lastUnload = parseInt(sessionStorage.getItem('lastUnload'), 10);
+                const timeSinceLastUnload = (Date.now() - lastUnload) / 1000;
+
+                if (!noteAdded && timeSpent < 15 && timeSinceLastUnload > 5) {
+                    navigator.sendBeacon('/add_unload_note', JSON.stringify({
+                        client_id: '{{ client_id }}',
+                        note: 'Page was closed within 15 seconds',
+                        date_of: '',
+                        phone_new: '',
+                        result1: 'Повесил трубку',
+                        result2: 'Ничего',
+                        time_of_call: timeSpent
+                    }));
+                }
+            });
+
+            // Check if a note was added and hide the form
+            if (localStorage.getItem('noteAdded') === 'true') {
+                document.querySelectorAll('form').forEach(form => {
+                    form.style.display = 'none';
+                });
+                localStorage.removeItem('noteAdded');
+            }
+
+            // Check if it's within 1 minute since the last note was added
+            const lastNoteTime = localStorage.getItem('lastNoteTime');
+            if (lastNoteTime && (Date.now() - parseInt(lastNoteTime, 10)) < 60000) {
+                document.querySelectorAll('form').forEach(form => {
+                    form.style.display = 'none';
+                });
+            }
         });
 
-        // Automatically add note if less than 15 seconds
-        window.addEventListener('unload', function(event) {
-            const timeSpent = (Date.now() - pageLoadTime) / 1000;  // Time in seconds
-            const lastUnload = parseInt(sessionStorage.getItem('lastUnload'), 10);
-            const timeSinceLastUnload = (Date.now() - lastUnload) / 1000;
+        async function addNote() {
+            const noteTextarea = document.getElementById('note');
+            const note = noteTextarea.value;
+            const result1Value = document.getElementById('result1').value;
+            const result2Value = document.getElementById('result2').value;
+            const timeSpent = (Date.now() - pageLoadTime) / 1000;  // Calculate time spent on the page in seconds
 
-            if (!noteAdded && timeSpent < 15 && timeSinceLastUnload > 5) {
-                navigator.sendBeacon('/add_unload_note', JSON.stringify({
+            const response = await fetch(`/notes/{{ client_id }}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
                     client_id: '{{ client_id }}',
-                    note: 'Page was closed within 15 seconds',
-                    date_of: '',
-                    phone_new: '',
-                    result1: 'Повесил трубку',
-                    result2: 'Ничего',
+                    note: note,
+                    date_of: document.getElementById('date_of').value,
+                    phone_new: document.getElementById('phone_new').value,
+                    result1: result1Value,
+                    result2: result2Value,
                     time_of_call: timeSpent
-                }));
+                })
+            });
+
+            const result = await response.json();
+            if (response.status === 201) {
+                noteAdded = true;
+                localStorage.setItem('noteAdded', 'true');
+                localStorage.setItem('lastNoteTime', Date.now().toString());
+                alert('Note added successfully. The page will reload to display the latest notes.');
+                location.reload();
+            } else {
+                alert(`Failed to add note: ${result.message}`);
             }
-        });
-
-        // Check if a note was added and hide the form
-        if (localStorage.getItem('noteAdded') === 'true') {
-            document.querySelectorAll('form').forEach(form => {
-                form.style.display = 'none';
-            });
-            localStorage.removeItem('noteAdded');
         }
-
-        // Check if it's within 1 minute since the last note was added
-        const lastNoteTime = localStorage.getItem('lastNoteTime');
-        if (lastNoteTime && (Date.now() - parseInt(lastNoteTime, 10)) < 60000) {
-            document.querySelectorAll('form').forEach(form => {
-                form.style.display = 'none';
-            });
-        }
-    });
-
-    async function addNote() {
-        const noteTextarea = document.getElementById('note');
-        const note = noteTextarea.value;
-        const result1Value = document.getElementById('result1').value;
-        const result2Value = document.getElementById('result2').value;
-        const timeSpent = (Date.now() - pageLoadTime) / 1000;  // Calculate time spent on the page in seconds
-
-        const response = await fetch(`/notes/{{ client_id }}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                client_id: '{{ client_id }}',
-                note: note,
-                date_of: document.getElementById('date_of').value,
-                phone_new: document.getElementById('phone_new').value,
-                result1: result1Value,
-                result2: result2Value,
-                time_of_call: timeSpent
-            })
-        });
-
-        const result = await response.json();
-        if (response.status === 201) {
-            noteAdded = true;
-            localStorage.setItem('noteAdded', 'true');
-            localStorage.setItem('lastNoteTime', Date.now().toString());
-            alert('Note added successfully. The page will reload to display the latest notes.');
-            location.reload();
-        } else {
-            alert(`Failed to add note: ${result.message}`);
-        }
-    }
-</script>
+    </script>
 </head>
 <body>
-    <h1>Коментарии для {{ client_id }}</h1>
-    {% if call_infos|length > 0 %}
-        {% set latest_info = call_infos[0] %} <!-- Use the first item in the sorted list -->
-        <div class="latest-record">
-            <h2>Последние записи</h2>
-            <table>
-                <tr><th>Анкета</th><td>{{ latest_info.anketa or '' }}</td></tr>
-                <tr><th>Дата предыдущего звонка</th><td>{{ latest_info.date_of_call.strftime('%Y-%m-%d %H:%M') if latest_info.date_of_call else '' }}</td></tr>
-                <tr><th>Номер телефона</th><td>{{ latest_info.phone or '' }}</td></tr>
-                <tr><th>ФИО</th><td>{{ latest_info.fio or '' }}</td></tr>
-                <tr><th>Основной долг</th><td>{{ latest_info.summ or '' }}</td></tr>
-                <tr><th>Просроченная сумма</th><td>{{ latest_info.summ_dolg or '' }}</td></tr>
-                <tr><th>Проценты</th><td>{{ latest_info.summ_perc or '' }}</td></tr>
-                <tr><th>Почтовый расход</th><td>{{ latest_info.summ_mail or '' }}</td></tr>
-                <tr><th>Пакет</th><td>{{ latest_info.summ_perc_plus or '' }}</td></tr>
-                <tr><th>Последний коментарий</th><td>{{ latest_info.comment or '' }}</td></tr>
-                <tr><th>Продукт</th><td>{{ latest_info.product or '' }}</td></tr>
-                <tr><th>Дата выхода в суд</th><td>{{ latest_info.Sud_vixod or '' }}</td></tr>
-                <tr><th>Дата решения суда</th><td>{{ latest_info.Sud_resh or '' }}</td></tr>
-            </table>
-        </div>
-    {% endif %}
-
-    <form onsubmit="event.preventDefault(); addNote();">
-        <div class="form-row">
-            <label for="result1">Результат 1:</label>
-            <select id="result1" name="result1" required>
-                <option value="">Выберите опцию</option>
-                <option value="Сам клиент">Сам клиент</option>
-                <option value="3 лицо">3 лицо</option>
-                <option value="Доп. номер">Доп. номер</option>
-                <option value="Повесил трубку">Повесил трубку</option>
-            </select>
-            <label for="result2">Результат 2:</label>
-            <select id="result2" name="result2" required></select>
-        </div>
-        <div class="form-row">
-            <label for="date_of">Дата оплаты:</label>
-            <input type="date" id="date_of" name="date_of">
-            <label for="note">Новый коментарий:</label>
-            <input type="text" id="note" name="note">
-        </div>
-        <div id="phone_new_div" class="form-row" style="display: none;">
-            <label for="phone_new">Новый номер телефона:</label>
-            <input type="text" id="phone_new" name="phone_new">
-        </div>
-        <button type="submit">Добавить</button>
-    </form>
-    <h2>Подробная информация</h2>
-    <button id="toggleSummDetails" class="collapsible">Детали</button>
+<h1>Коментарии для {{ client_id }}</h1>
+{% if call_infos|length > 0 %}
+{% set latest_info = call_infos[0] %} <!-- Use the first item in the sorted list -->
+<div class="latest-record">
+    <h2>Последние записи</h2>
     <table>
-        <thead>
-            <tr>
-                <th>Дата звонка</th>
-                <th>ID клиента</th>
-                <th>Время звонка</th>
-                <th>ФИО</th>
-                <th>Основной долг</th>
-                <th class="collapsible-content" style="display: none;">Просроченная сумма</th>
-                <th class="collapsible-content" style="display: none;">Процент</th>
-                <th class="collapsible-content" style="display: none;">Почтовый расход</th>
-                <th class="collapsible-content" style="display: none;">Пакет</th>
-                <th>Дни просрочки</th>
-                <th>Продукт</th>
-                <th class="collapsible-content" style="display: none;">Дата выхода в суд</th>
-                <th class="collapsible-content" style="display: none;">Дата решения суда</th>
-                <th class="collapsible-content" style="display: none;">Регион</th>
-                <th class="collapsible-content" style="display: none;">Адрес</th>
-                <th class="collapsible-content" style="display: none;">Анкета</th>
-                <th>Результат 1</th>
-                <th>Результат 2</th>
-                <th>Дата оплаты</th>
-                <th>Коментарий</th>
-                <th>Новый номер телефона</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for info in call_infos %}
-            <tr>
-                <td>{{ info.date_of_call.strftime('%Y-%m-%d %H:%M') if info.date_of_call else '' }}</td>
-                <td>{{ info.Client_id or '' }}</td>
-                <td>{{ info.time_of_call or '' }}</td>
-                <td>{{ info.fio or '' }}</td>
-                <td>{{ info.summ or '' }}</td>
-                <td class="collapsible-content" style="display: none;">{{ info.summ_dolg or '' }}</td>
-                <td class="collapsible-content" style="display: none;">{{ info.summ_perc or '' }}</td>
-                <td class="collapsible-content" style="display: none;">{{ info.summ_mail or '' }}</td>
-                <td class="collapsible-content" style="display: none;">{{ info.summ_perc_plus or '' }}</td>
-                <td>{{ info.day or '' }}</td>
-                <td>{{ info.product or '' }}</td>
-                <td class="collapsible-content" style="display: none;">{{ info.Sud_vixod or '' }}</td>
-                <td class="collapsible-content" style="display: none;">{{ info.Sud_resh or '' }}</td>
-                <td class="collapsible-content" style="display: none;">{{ info.region or '' }}</td>
-                <td class="collapsible-content" style="display: none;">{{ info.adress or '' }}</td>
-                <td class="collapsible-content" style="display: none;">{{ info.anketa or '' }}</td>
-                <td>{{ info.result1 or '' }}</td>
-                <td>{{ info.result2 or '' }}</td>
-                <td>{{ info.date_of or '' }}</td>
-                <td>{{ info.comment or '' }}</td>
-                <td>{{ info.phone_new or '' }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
+        <tr>
+            <th>Анкета</th>
+            <td>{{ latest_info.anketa or '' }}</td>
+        </tr>
+        <tr>
+            <th>Дата предыдущего звонка</th>
+            <td>{{ latest_info.date_of_call.strftime('%Y-%m-%d %H:%M') if latest_info.date_of_call else '' }}</td>
+        </tr>
+        <tr>
+            <th>Номер телефона</th>
+            <td>{{ latest_info.phone or '' }}</td>
+        </tr>
+        <tr>
+            <th>ФИО</th>
+            <td>{{ latest_info.fio or '' }}</td>
+        </tr>
+        <tr>
+            <th>Основной долг</th>
+            <td>{{ latest_info.summ or '' }}</td>
+        </tr>
+        <tr>
+            <th>Просроченная сумма</th>
+            <td>{{ latest_info.summ_dolg or '' }}</td>
+        </tr>
+        <tr>
+            <th>Проценты</th>
+            <td>{{ latest_info.summ_perc or '' }}</td>
+        </tr>
+        <tr>
+            <th>Почтовый расход</th>
+            <td>{{ latest_info.summ_mail or '' }}</td>
+        </tr>
+        <tr>
+            <th>Пакет</th>
+            <td>{{ latest_info.summ_perc_plus or '' }}</td>
+        </tr>
+        <tr>
+            <th>Последний коментарий</th>
+            <td>{{ latest_info.comment or '' }}</td>
+        </tr>
+        <tr>
+            <th>Продукт</th>
+            <td>{{ latest_info.product or '' }}</td>
+        </tr>
+        <tr>
+            <th>Дата выхода в суд</th>
+            <td>{{ latest_info.Sud_vixod or '' }}</td>
+        </tr>
+        <tr>
+            <th>Дата решения суда</th>
+            <td>{{ latest_info.Sud_resh or '' }}</td>
+        </tr>
     </table>
+</div>
+{% endif %}
+
+<form onsubmit="event.preventDefault(); addNote();">
+    <div class="form-row">
+        <label for="result1">Результат 1:</label>
+        <select id="result1" name="result1" required>
+            <option value="">Выберите опцию</option>
+            <option value="Сам клиент">Сам клиент</option>
+            <option value="3 лицо">3 лицо</option>
+            <option value="Доп. номер">Доп. номер</option>
+            <option value="Повесил трубку">Повесил трубку</option>
+        </select>
+        <label for="result2">Результат 2:</label>
+        <select id="result2" name="result2" required></select>
+    </div>
+    <div class="form-row">
+        <label for="date_of">Дата оплаты:</label>
+        <input type="date" id="date_of" name="date_of">
+        <label for="note">Новый коментарий:</label>
+        <input type="text" id="note" name="note">
+    </div>
+    <div id="phone_new_div" class="form-row" style="display: none;">
+        <label for="phone_new">Новый номер телефона:</label>
+        <input type="text" id="phone_new" name="phone_new">
+    </div>
+    <button type="submit">Добавить</button>
+</form>
+<h2>Подробная информация</h2>
+<button id="toggleSummDetails" class="collapsible">Детали</button>
+<table>
+    <thead>
+    <tr>
+        <th>Дата звонка</th>
+        <th>ID клиента</th>
+        <th>Время звонка</th>
+        <th>ФИО</th>
+        <th>Основной долг</th>
+        <th class="collapsible-content" style="display: none;">Просроченная сумма</th>
+        <th class="collapsible-content" style="display: none;">Процент</th>
+        <th class="collapsible-content" style="display: none;">Почтовый расход</th>
+        <th class="collapsible-content" style="display: none;">Пакет</th>
+        <th>Дни просрочки</th>
+        <th>Продукт</th>
+        <th class="collapsible-content" style="display: none;">Дата выхода в суд</th>
+        <th class="collapsible-content" style="display: none;">Дата решения суда</th>
+        <th class="collapsible-content" style="display: none;">Регион</th>
+        <th class="collapsible-content" style="display: none;">Адрес</th>
+        <th class="collapsible-content" style="display: none;">Анкета</th>
+        <th>Результат 1</th>
+        <th>Результат 2</th>
+        <th>Дата оплаты</th>
+        <th>Коментарий</th>
+        <th>Новый номер телефона</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for info in call_infos %}
+    <tr>
+        <td>{{ info.date_of_call.strftime('%Y-%m-%d %H:%M') if info.date_of_call else '' }}</td>
+        <td>{{ info.Client_id or '' }}</td>
+        <td>{{ info.time_of_call or '' }}</td>
+        <td>{{ info.fio or '' }}</td>
+        <td>{{ info.summ or '' }}</td>
+        <td class="collapsible-content" style="display: none;">{{ info.summ_dolg or '' }}</td>
+        <td class="collapsible-content" style="display: none;">{{ info.summ_perc or '' }}</td>
+        <td class="collapsible-content" style="display: none;">{{ info.summ_mail or '' }}</td>
+        <td class="collapsible-content" style="display: none;">{{ info.summ_perc_plus or '' }}</td>
+        <td>{{ info.day or '' }}</td>
+        <td>{{ info.product or '' }}</td>
+        <td class="collapsible-content" style="display: none;">{{ info.Sud_vixod or '' }}</td>
+        <td class="collapsible-content" style="display: none;">{{ info.Sud_resh or '' }}</td>
+        <td class="collapsible-content" style="display: none;">{{ info.region or '' }}</td>
+        <td class="collapsible-content" style="display: none;">{{ info.adress or '' }}</td>
+        <td class="collapsible-content" style="display: none;">{{ info.anketa or '' }}</td>
+        <td>{{ info.result1 or '' }}</td>
+        <td>{{ info.result2 or '' }}</td>
+        <td>{{ info.date_of or '' }}</td>
+        <td>{{ info.comment or '' }}</td>
+        <td>{{ info.phone_new or '' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 </body>
 </html>
